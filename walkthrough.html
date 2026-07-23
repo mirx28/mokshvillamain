@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Srivaas Realty — Walkthrough</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap");
+
+      :root {
+        --bg: #0f0f0f;
+        --bg-2: #141414;
+        --text: #f5f5f5;
+        --text-dim: rgba(245, 245, 245, 0.5);
+        --line: rgba(245, 245, 245, 0.08);
+        --line-2: rgba(245, 245, 245, 0.15);
+        --nav-dark: #181717;
+        --nav-light: #f5f5f5;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+
+      body {
+        width: 100%;
+        font-family: "Host Grotesk", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      ::selection {
+        background: var(--text);
+        color: var(--bg);
+      }
+
+      /* Dot grid background */
+      .dot-grid {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-image: radial-gradient(circle, rgba(245,245,245,0.04) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+      }
+
+      /* Film grain */
+      .grain {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+      }
+
+      /* ============ NAV ============ */
+      .site-logo {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        opacity: 0.92;
+        transition: opacity 0.3s ease;
+      }
+
+      .site-logo:hover {
+        opacity: 1;
+      }
+
+      .site-logo img {
+        height: 32px;
+        width: auto;
+        display: block;
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
+      }
+
+      .main-nav {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        gap: 0.15rem;
+        padding: 0.35rem;
+        border-radius: 4rem;
+        background-color: var(--nav-light);
+      }
+
+      .main-nav-link {
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: var(--nav-dark);
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        padding: 0.6rem 1.2rem;
+        border-radius: 4rem;
+        transition: color 0.3s ease;
+      }
+
+      .main-nav-link.active {
+        color: var(--nav-light);
+        background-color: var(--nav-dark);
+      }
+
+      /* ============ PAGE TRANSITION ============ */
+      .page-transition {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        background: var(--bg);
+        pointer-events: none;
+      }
+
+      /* ============ HERO ============ */
+      .hero {
+        position: relative;
+        min-height: 100svh;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        z-index: 2;
+        padding: 2rem;
+      }
+
+      .hero-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.4em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: 2rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 10vw, 8rem);
+        font-weight: 200;
+        text-transform: uppercase;
+        letter-spacing: -0.03em;
+        line-height: 0.9;
+        overflow: visible;
+      }
+
+      .hero h1 .italic {
+        font-style: italic;
+        font-weight: 300;
+      }
+
+      .hero-sub {
+        margin-top: 2rem;
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        max-width: 35ch;
+        line-height: 1.6;
+        text-wrap: balance;
+      }
+
+      .hero-chapters {
+        margin-top: 3rem;
+        display: flex;
+        gap: 2rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      .hero-chapters span {
+        position: relative;
+      }
+
+      .hero-chapters span::before {
+        content: "";
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--text-dim);
+        margin-right: 0.5rem;
+        vertical-align: middle;
+      }
+
+      .scroll-hint {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        opacity: 0;
+        animation: fadeInUp 1s ease 1.5s forwards;
+      }
+
+      .scroll-hint::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 30px;
+        background: var(--text-dim);
+        margin: 0.5rem auto 0;
+        animation: scrollLine 2s ease-in-out infinite;
+      }
+
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+
+      @keyframes scrollLine {
+        0%, 100% { transform: scaleY(0.3); transform-origin: top; }
+        50% { transform: scaleY(1); transform-origin: top; }
+      }
+
+      /* ============ CHAPTER SECTIONS ============ */
+      .chapter {
+        position: relative;
+        width: 100vw;
+        min-height: 100svh;
+        min-height: 100dvh;
+        overflow: hidden;
+        background: var(--bg-2);
+        z-index: 2;
+      }
+
+      .chapter-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 1;
+        pointer-events: none;
+        filter: brightness(0.78) saturate(1.08) contrast(1.06);
+      }
+
+      .chapter-vignette {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        pointer-events: none;
+        background: radial-gradient(ellipse at center, transparent 40%, rgba(15,15,15,0.4) 100%);
+      }
+
+      /* Chapter number */
+      .ch-number {
+        position: absolute;
+        z-index: 3;
+        font-size: clamp(8rem, 22vw, 18rem);
+        font-weight: 200;
+        line-height: 0.8;
+        letter-spacing: -0.05em;
+        color: var(--text);
+        opacity: 0;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      /* Chapter title */
+      .ch-title {
+        position: absolute;
+        z-index: 3;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .ch-title h2 {
+        font-size: clamp(1.8rem, 4.5vw, 3.5rem);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        line-height: 1;
+        margin-bottom: 1rem;
+        overflow: visible;
+      }
+
+      .ch-title p {
+        font-size: 0.85rem;
+        max-width: 38ch;
+        line-height: 1.6;
+        color: var(--text-dim);
+      }
+
+      /* Char animation */
+      .char {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: top;
+      }
+
+      .char span {
+        display: inline-block;
+        will-change: transform;
+      }
+
+      /* Timecode display */
+      .ch-timecode {
+        position: absolute;
+        z-index: 4;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        color: var(--text-dim);
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Progress bar */
+      .ch-progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        z-index: 4;
+        background: var(--line);
+      }
+
+      .ch-progress-fill {
+        height: 100%;
+        width: 100%;
+        transform-origin: left;
+        transform: scaleX(0);
+        background: var(--text);
+      }
+
+      /* Loading indicator */
+      .ch-loading {
+        position: absolute;
+        z-index: 5;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        opacity: 1;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+      }
+
+      .ch-loading.hidden {
+        opacity: 0;
+      }
+
+      .ch-loading::after {
+        content: "...";
+        display: inline-block;
+        animation: dots 1.5s steps(4) infinite;
+      }
+
+      @keyframes dots {
+        0% { content: ""; }
+        25% { content: "."; }
+        50% { content: ".."; }
+        75% { content: "..."; }
+      }
+
+      /* ============ ASYMMETRIC POSITIONING PER CHAPTER ============ */
+      /* Chapter 01 — left aligned */
+      .ch-01 .ch-number { top: 8%; left: 5%; }
+      .ch-01 .ch-title { bottom: 12%; left: 5%; max-width: 45%; }
+      .ch-01 .ch-timecode { top: 2rem; right: 2rem; }
+
+      /* Chapter 02 — right aligned */
+      .ch-02 .ch-number { bottom: 8%; right: 5%; text-align: right; }
+      .ch-02 .ch-title { top: 15%; right: 5%; max-width: 45%; text-align: right; }
+      .ch-02 .ch-timecode { top: 2rem; left: 2rem; }
+
+      /* Chapter 03 — centered bottom */
+      .ch-03 .ch-number { top: 10%; left: 50%; transform: translateX(-50%); text-align: center; opacity: 0; visibility: hidden; }
+      .ch-03 .ch-title { bottom: 10%; left: 50%; transform: translateX(-50%); text-align: center; max-width: 50%; }
+      .ch-03 .ch-title p { margin: 0 auto; }
+      .ch-03 .ch-timecode { bottom: 2rem; right: 2rem; }
+
+      .ch-03-overlay {
+        position: absolute;
+        z-index: 4;
+        left: 50%;
+        bottom: 20%;
+        transform: translateX(-50%) translateY(16px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      .ch-03-overlay.show {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+      }
+
+      .ch-03-overlay p {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(245, 245, 245, 0.9);
+        padding: 0.8rem 1.1rem;
+        border: 1px solid rgba(245, 245, 245, 0.16);
+        border-radius: 999px;
+        background: rgba(15, 15, 15, 0.45);
+        backdrop-filter: blur(14px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ============ VERTICAL TIMELINE ============ */
+      .timeline {
+        position: fixed;
+        left: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 100;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+      }
+
+      .timeline-line {
+        width: 1px;
+        height: 120px;
+        background: var(--line);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .timeline-line-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0%;
+        background: var(--text);
+      }
+
+      .timeline-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(245, 245, 245, 0.2);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        flex-shrink: 0;
+      }
+
+      .timeline-dot.active {
+        background: var(--text);
+        transform: scale(1.4);
+      }
+
+      .timeline-dot:hover {
+        background: rgba(245, 245, 245, 0.5);
+      }
+
+      /* ============ OUTRO ============ */
+      .outro {
+        position: relative;
+        height: 100svh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        z-index: 2;
+        padding: 2rem;
+      }
+
+      .outro h1 {
+        font-size: clamp(2rem, 6vw, 5rem);
+        font-weight: 200;
+        text-transform: uppercase;
+        letter-spacing: -0.03em;
+        line-height: 0.9;
+        overflow: visible;
+      }
+
+      .outro h1 .italic {
+        font-style: italic;
+        font-weight: 300;
+      }
+
+      .outro-meta {
+        margin-top: 3rem;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 768px) {
+        .main-nav {
+          top: 1rem;
+          right: 1rem;
+          left: 1rem;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 0.3rem;
+          padding: 0.45rem;
+        }
+
+        .main-nav-link {
+          font-size: 0.65rem;
+          padding: 0.5rem 0.8rem;
+        }
+
+        .hero { padding: 1rem; }
+        .hero h1 { font-size: clamp(2.5rem, 14vw, 5rem); }
+        .hero-sub { max-width: 32ch; }
+        .hero-chapters { flex-direction: column; gap: 0.5rem; }
+
+        .ch-01 .ch-number, .ch-02 .ch-number, .ch-03 .ch-number {
+          font-size: clamp(6rem, 30vw, 10rem);
+        }
+
+        .ch-01 .ch-title, .ch-02 .ch-title, .ch-03 .ch-title {
+          max-width: 88% !important;
+          left: 5% !important;
+          right: 5% !important;
+          text-align: left !important;
+          transform: none !important;
+          bottom: 8% !important;
+          top: auto !important;
+        }
+
+        .ch-title h2 { font-size: 1.5rem; }
+        .ch-title p { max-width: 34ch; }
+
+        .ch-timecode {
+          top: auto;
+          bottom: 1rem;
+          right: 1rem;
+          left: auto;
+          font-size: 0.62rem;
+        }
+
+        .timeline { display: none; }
+      }
+
+      @media (max-width: 560px) {
+        .hero-label,
+        .hero-sub,
+        .hero-chapters,
+        .outro-meta {
+          font-size: 0.62rem;
+        }
+
+        .hero h1,
+        .outro h1 {
+          font-size: clamp(2.15rem, 12vw, 3.5rem);
+        }
+
+        .hero-sub {
+          margin-top: 1.25rem;
+          max-width: 30ch;
+        }
+
+        .hero-chapters {
+          gap: 0.35rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .ch-title h2 {
+          font-size: 1.2rem;
+        }
+
+        .ch-title p {
+          font-size: 0.72rem;
+          line-height: 1.5;
+        }
+
+        .chapter-video {
+          filter: brightness(0.72) saturate(1.12) contrast(1.08);
+        }
+
+        .scroll-hint {
+          bottom: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Background layers -->
+    <div class="dot-grid"></div>
+    <div class="grain"></div>
+
+    <!-- Page transition overlay -->
+    <div class="page-transition" id="pageTransition"></div>
+
+    <a href="index.html" class="site-logo" aria-label="Srivaas Realty logo">
+      <img src="logo.png" alt="Srivaas Realty" />
+    </a>
+
+    <!-- Nav -->
+    <nav class="main-nav">
+      <a href="index.html" class="main-nav-link">Home</a>
+      <a href="interior.html" class="main-nav-link">Interior</a>
+      <a href="exterior.html" class="main-nav-link">Exterior</a>
+      <a href="walkthrough.html" class="main-nav-link active">Walkthrough</a>
+    </nav>
+
+    <!-- Vertical timeline -->
+    <div class="timeline" id="timeline">
+      <div class="timeline-dot active" data-target="hero"></div>
+      <div class="timeline-line"><div class="timeline-line-fill" id="timelineFill1"></div></div>
+      <div class="timeline-dot" data-target="ch01"></div>
+      <div class="timeline-line"><div class="timeline-line-fill" id="timelineFill2"></div></div>
+      <div class="timeline-dot" data-target="ch02"></div>
+      <div class="timeline-line"><div class="timeline-line-fill" id="timelineFill3"></div></div>
+      <div class="timeline-dot" data-target="ch03"></div>
+      <div class="timeline-line"><div class="timeline-line-fill" id="timelineFill4"></div></div>
+      <div class="timeline-dot" data-target="outro"></div>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+      <p class="hero-label">Srivaas Realty — Walkthrough</p>
+      <h1>The <span class="italic">Making</span></h1>
+      <p class="hero-sub">Three walkthroughs. One vision. Scroll to move through each frame — construction, interior, and exterior — at your own pace.</p>
+      <div class="hero-chapters">
+        <span>01 Construction</span>
+        <span>02 Interior</span>
+        <span>03 Exterior</span>
+      </div>
+      <div class="scroll-hint">Scroll</div>
+    </section>
+
+    <!-- Chapter 01 — Construction -->
+    <section class="chapter ch-01" id="ch01">
+      <video class="chapter-video" id="video01" src="https://mirx28.github.io/mokshavilla-videos/construction.mp4" muted playsinline preload="auto"></video>
+      <div class="chapter-vignette"></div>
+      <div class="ch-loading" id="loading01">Loading Construction</div>
+      <div class="ch-number" id="num01">01</div>
+      <div class="ch-title" id="title01">
+        <h2>From Foundation<br>to Form</h2>
+        <p>Watch the villa rise from raw earth to finished structure — every beam, every stone, every detail placed with intention.</p>
+      </div>
+      <div class="ch-timecode" id="tc01">00:00:00 / 00:00:00</div>
+      <div class="ch-progress"><div class="ch-progress-fill" id="prog01"></div></div>
+    </section>
+
+    <!-- Chapter 02 — Interior -->
+    <section class="chapter ch-02" id="ch02">
+      <video class="chapter-video" id="video02" src="https://mirx28.github.io/mokshavilla-videos/interior1.mp4" muted playsinline preload="auto"></video>
+      <div class="chapter-vignette"></div>
+      <div class="ch-loading" id="loading02">Loading Interior</div>
+      <div class="ch-number" id="num02">02</div>
+      <div class="ch-title" id="title02">
+        <h2>Within<br>the Walls</h2>
+        <p>Step inside. Warm timber, cold stone, and natural light compose a space that feels both grounded and expansive.</p>
+      </div>
+      <div class="ch-timecode" id="tc02">00:00:00 / 00:00:00</div>
+      <div class="ch-progress"><div class="ch-progress-fill" id="prog02"></div></div>
+    </section>
+
+    <!-- Chapter 03 — Exterior -->
+    <section class="chapter ch-03" id="ch03">
+      <video class="chapter-video" id="video03" src="https://mirx28.github.io/mokshavilla-videos/exterior1.mp4" muted playsinline preload="auto"></video>
+      <div class="chapter-vignette"></div>
+      <div class="ch-loading" id="loading03">Loading Exterior</div>
+      <div class="ch-number" id="num03">03</div>
+      <div class="ch-title" id="title03">
+        <h2>Against<br>the Mountain</h2>
+        <p>The villa in its landscape — cantilevered volumes, terraced gardens, and glass facades that frame the Himalayan valley beyond.</p>
+      </div>
+      <div class="ch-03-overlay" id="ch03Overlay">
+        <p>3,000 square yards of premium private estate</p>
+      </div>
+      <div class="ch-timecode" id="tc03">00:00:00 / 00:00:00</div>
+      <div class="ch-progress"><div class="ch-progress-fill" id="prog03"></div></div>
+    </section>
+
+    <!-- Outro -->
+    <section class="outro" id="outro">
+      <h1>Every angle.<br>Every detail.<br><span class="italic">Moksha.</span></h1>
+      <p class="outro-meta">Srivaas Realty — 2026</p>
+    </section>
+
+    <!-- GSAP + ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- Lenis smooth scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <script>
+      gsap.registerPlugin(ScrollTrigger);
+
+      /* ============ SMOOTH SCROLL ============ */
+      let lenis = null;
+      if (window.Lenis) {
+        lenis = new Lenis({
+          duration: 1.15,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+          wheelMultiplier: 0.8,
+          touchMultiplier: 1.5,
+          lerp: 0.08,
+          syncTouch: true,
+        });
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+      }
+
+      /* ============ PAGE TRANSITION ============ */
+      const pageTransition = document.getElementById("pageTransition");
+      gsap.set(pageTransition, { opacity: 1 });
+      gsap.to(pageTransition, {
+        opacity: 0,
+        duration: 0.7,
+        ease: "power2.out",
+        delay: 0.1,
+        onComplete: () => (pageTransition.style.pointerEvents = "none"),
+      });
+
+      document.querySelectorAll(".main-nav-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          const href = link.getAttribute("href");
+          if (!href || href.startsWith("http") || href === "#") return;
+          e.preventDefault();
+          pageTransition.style.pointerEvents = "all";
+          gsap.to(pageTransition, {
+            opacity: 1,
+            duration: 0.7,
+            ease: "power2.inOut",
+            onComplete: () => (window.location.href = href),
+          });
+        });
+      });
+
+      /* ============ CHAR SPLITTING ============ */
+      function splitChars(el) {
+        const text = el.textContent;
+        el.innerHTML = "";
+        const words = text.split(" ");
+        words.forEach((word, i) => {
+          const wordSpan = document.createElement("span");
+          wordSpan.style.display = "inline-flex";
+          [...word].forEach((char) => {
+            const charSpan = document.createElement("span");
+            charSpan.className = "char";
+            charSpan.innerHTML = `<span>${char}</span>`;
+            wordSpan.appendChild(charSpan);
+          });
+          el.appendChild(wordSpan);
+          if (i < words.length - 1) {
+            el.appendChild(document.createTextNode(" "));
+          }
+        });
+      }
+
+      /* ============ TIMECODE FORMATTER ============ */
+      function formatTime(seconds) {
+        if (!seconds || !isFinite(seconds)) return "00:00:00";
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        const f = Math.floor((seconds % 1) * 24);
+        return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}:${String(f).padStart(2, "0")}`;
+      }
+
+      /* ============ FORCE VIDEO FIRST FRAME ============ */
+      // Many browsers won't render a <video> element's first frame
+      // unless playback has been initiated at least once.
+      // This function forces the frame to render by briefly playing then pausing.
+      function forceFirstFrame(video) {
+        video.play().then(() => {
+          video.pause();
+        }).catch(() => {
+          // If play() is blocked, try seeking to a small time
+          try { video.currentTime = 0.01; } catch (e) {}
+        });
+      }
+
+      /* ============ FIX INFINITY DURATION ============ */
+      function getVideoDuration(video) {
+        if (video.duration && isFinite(video.duration) && video.duration > 0) {
+          return Promise.resolve(video.duration);
+        }
+        // Infinity/NaN duration fix: seek to huge time to force browser to compute it
+        return new Promise((resolve) => {
+          let resolved = false;
+          const onDurationChange = () => {
+            if (resolved) return;
+            resolved = true;
+            video.removeEventListener("durationchange", onDurationChange);
+            video.currentTime = 0;
+            resolve(video.duration && isFinite(video.duration) ? video.duration : 0);
+          };
+          video.addEventListener("durationchange", onDurationChange);
+          try { video.currentTime = 1e101; } catch (e) { resolve(0); }
+          // Fallback timeout
+          setTimeout(() => {
+            if (!resolved) {
+              resolved = true;
+              video.removeEventListener("durationchange", onDurationChange);
+              resolve(0);
+            }
+          }, 3000);
+        });
+      }
+
+      /* ============ HERO ANIMATION ============ */
+      window.addEventListener("load", () => {
+        const heroTitle = document.querySelector(".hero h1");
+        const heroLabel = document.querySelector(".hero-label");
+        const heroSub = document.querySelector(".hero-sub");
+        const heroChapters = document.querySelector(".hero-chapters");
+
+        splitChars(heroTitle);
+        const heroChars = heroTitle.querySelectorAll(".char span");
+
+        gsap.set(heroChars, { yPercent: 110 });
+        gsap.set(heroLabel, { opacity: 0, y: 10 });
+        gsap.set(heroSub, { opacity: 0, y: 20 });
+        gsap.set(heroChapters, { opacity: 0, y: 15 });
+
+        gsap
+          .timeline({ delay: 0.4 })
+          .to(heroLabel, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" })
+          .to(heroChars, { yPercent: 0, duration: 1, stagger: 0.03, ease: "power4.out" }, "-=0.2")
+          .to(heroSub, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, "-=0.6")
+          .to(heroChapters, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, "-=0.3");
+      });
+
+      /* ============ CHAPTER SCROLL-SCRUB SETUP ============ */
+      // KEY FIX: Create ScrollTrigger IMMEDIATELY, don't wait for video to load.
+      // The video loads in parallel and scrubbing kicks in once metadata is ready.
+
+      const chapters = [
+        { id: "ch01", videoId: "video01", numId: "num01", titleId: "title01", tcId: "tc01", progId: "prog01", loadingId: "loading01" },
+        { id: "ch02", videoId: "video02", numId: "num02", titleId: "title02", tcId: "tc02", progId: "prog02", loadingId: "loading02" },
+        { id: "ch03", videoId: "video03", numId: "num03", titleId: "title03", tcId: "tc03", progId: "prog03", loadingId: "loading03" },
+      ];
+
+      // Shared state for each chapter's video duration (updates when metadata loads)
+      const chapterDurations = [0, 0, 0];
+
+      chapters.forEach((ch, index) => {
+        const section = document.getElementById(ch.id);
+        const video = document.getElementById(ch.videoId);
+        const numberEl = document.getElementById(ch.numId);
+        const titleEl = document.getElementById(ch.titleId);
+        const tcEl = document.getElementById(ch.tcId);
+        const progEl = document.getElementById(ch.progId);
+        const loadingEl = document.getElementById(ch.loadingId);
+
+        // Split title chars
+        const titleH2 = titleEl.querySelector("h2");
+        const titleP = titleEl.querySelector("p");
+        const overlayEl = index === 2 ? document.getElementById("ch03Overlay") : null;
+        splitChars(titleH2);
+        const titleChars = titleH2.querySelectorAll(".char span");
+
+        // Set initial states
+        gsap.set(titleChars, { yPercent: 110 });
+        gsap.set(titleP, { opacity: 0, y: 20 });
+        if (overlayEl) gsap.set(overlayEl, { opacity: 0, y: 16 });
+
+        /* --- Create the scrub timeline IMMEDIATELY (no waiting for video) --- */
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "+=600%",
+            pin: true,
+            scrub: 1.3,
+            anticipatePin: 1,
+            onUpdate: (self) => {
+              const duration = chapterDurations[index];
+              const targetTime = duration > 0 ? self.progress * duration : 0;
+
+              // Scrub video if we have a valid duration
+              if (duration > 0 && video.readyState >= 2) {
+                if (Math.abs(video.currentTime - targetTime) > 0.016) {
+                  try { video.currentTime = targetTime; } catch (e) {}
+                }
+              }
+
+              if (overlayEl) {
+                const showAt = 20.5;
+                const hideAt = 24;
+                if (targetTime >= showAt && targetTime < hideAt) {
+                  overlayEl.classList.add("show");
+                } else {
+                  overlayEl.classList.remove("show");
+                }
+              }
+
+              // Update timecode
+              tcEl.textContent = `${formatTime(video.currentTime)} / ${formatTime(chapterDurations[index])}`;
+
+              // Update progress bar
+              progEl.style.transform = `scaleX(${self.progress})`;
+            },
+          },
+        });
+
+        // Text animation timeline (mapped to scrub progress 0 → 1)
+        tl.to(numberEl, { opacity: 1, duration: 0.22 }, 0.1)
+          .to(titleChars, { yPercent: 0, stagger: 0.025, duration: 0.28, ease: "power4.out" }, 0.16)
+          .to(titleP, { opacity: 0.7, y: 0, duration: 0.22, ease: "power3.out" }, 0.32)
+          .to(tcEl, { opacity: 1, duration: 0.16 }, 0.24)
+          .to({}, { duration: 0.32 }, 0.5) // hold
+          .to([numberEl, titleEl, tcEl], { opacity: 0, duration: 0.2 }, 0.82)
+          .to({}, { duration: 0.18 }, 0.95); // tail
+
+
+        /* --- Load video metadata in parallel (updates duration when ready) --- */
+        const onMetadataReady = () => {
+          getVideoDuration(video).then((duration) => {
+            chapterDurations[index] = duration;
+            tcEl.textContent = `00:00:00 / ${formatTime(duration)}`;
+            if (loadingEl) loadingEl.classList.add("hidden");
+            // Force the first frame to render on screen
+            forceFirstFrame(video);
+            // Refresh ScrollTrigger now that we have duration
+            ScrollTrigger.refresh();
+          });
+        };
+
+        if (video.readyState >= 1) {
+          onMetadataReady();
+        } else {
+          video.addEventListener("loadedmetadata", onMetadataReady, { once: true });
+        }
+
+        // Fallback: hide loading after 4s regardless
+        setTimeout(() => {
+          if (loadingEl) loadingEl.classList.add("hidden");
+        }, 4000);
+      });
+
+      /* ============ TIMELINE INDICATOR ============ */
+      const timelineDots = document.querySelectorAll(".timeline-dot");
+      const timelineFills = [
+        document.getElementById("timelineFill1"),
+        document.getElementById("timelineFill2"),
+        document.getElementById("timelineFill3"),
+        document.getElementById("timelineFill4"),
+      ];
+
+      const sections = [
+        { el: document.getElementById("hero"), index: 0 },
+        { el: document.getElementById("ch01"), index: 1 },
+        { el: document.getElementById("ch02"), index: 2 },
+        { el: document.getElementById("ch03"), index: 3 },
+        { el: document.getElementById("outro"), index: 4 },
+      ];
+
+      sections.forEach(({ el, index }) => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 50%",
+          end: "bottom 50%",
+          onToggle: (self) => {
+            if (self.isActive) {
+              timelineDots.forEach((d, i) => d.classList.toggle("active", i === index));
+            }
+          },
+        });
+      });
+
+      timelineFills.forEach((fill, i) => {
+        gsap.to(fill, {
+          height: "100%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: sections[i + 1].el,
+            start: "top 50%",
+            end: "bottom 50%",
+            scrub: 1.2,
+          },
+        });
+      });
+
+      timelineDots.forEach((dot) => {
+        dot.addEventListener("click", () => {
+          const targetId = dot.getAttribute("data-target");
+          const targetEl = document.getElementById(targetId);
+          if (targetEl && lenis) {
+            lenis.scrollTo(targetEl, { duration: 1.5 });
+          } else if (targetEl) {
+            targetEl.scrollIntoView({ behavior: "smooth" });
+          }
+        });
+      });
+
+      /* ============ OUTRO ANIMATION ============ */
+      const outroH1 = document.querySelector(".outro h1");
+      const outroMeta = document.querySelector(".outro-meta");
+      splitChars(outroH1);
+      const outroChars = outroH1.querySelectorAll(".char span");
+
+      gsap.set(outroChars, { yPercent: 110 });
+      gsap.set(outroMeta, { opacity: 0 });
+
+      gsap
+        .timeline({
+          scrollTrigger: {
+            trigger: ".outro",
+            start: "top 70%",
+          },
+        })
+        .to(outroChars, { yPercent: 0, duration: 0.8, stagger: 0.02, ease: "power4.out" })
+        .to(outroMeta, { opacity: 1, duration: 0.5, ease: "power3.out" }, "-=0.3");
+
+      /* ============ RESIZE ============ */
+      window.addEventListener("resize", () => {
+        ScrollTrigger.refresh();
+      });
+    </script>
+  </body>
+</html>

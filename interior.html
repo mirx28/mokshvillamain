@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Srivaas Realty — Interior</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+
+      :root {
+        --nav-dark: #181717;
+        --nav-light: #f5f5f5;
+        --nav-mid: #292725;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+     body {
+  font-family: "Inter", sans-serif;
+  background-color: #0f0f0f;
+}
+
+      img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        will-change: transform;
+      }
+
+      h1 {
+        font-size: 5rem;
+        font-weight: 500;
+        letter-spacing: -0.1rem;
+        line-height: 1.25;
+      }
+
+      p {
+        font-size: 1.125rem;
+        font-weight: 400;
+        line-height: 1.25;
+      }
+
+      section {
+        position: relative;
+        width: 100vw;
+        background-color: #0f0f0f;
+        color: #fff;
+      }
+
+      .intro,
+      .outro {
+        min-height: 100svh;
+        min-height: 100dvh;
+        padding: 1.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .intro {
+        overflow: hidden;
+        position: relative;
+      }
+
+      .intro-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 0;
+        filter: brightness(0.76) saturate(1.06) contrast(1.04);
+      }
+
+      .intro-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 15, 15, 0.5);
+        z-index: 1;
+      }
+
+      .intro h1,
+      .outro h1 {
+        width: 60%;
+        max-width: 13ch;
+        text-align: center;
+        line-height: 1.1;
+        position: relative;
+        z-index: 2;
+        text-wrap: balance;
+      }
+
+      .cards {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 25svh;
+      }
+
+      .card-marquee {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        overflow: hidden;
+      }
+
+      .card-marquee .marquee {
+        display: flex;
+      }
+
+      .card-marquee .marquee h1 {
+        white-space: nowrap;
+        font-size: 10vw;
+        font-weight: 600;
+        margin-right: 30px;
+      }
+
+      .card {
+        position: relative;
+        width: 100vw;
+        height: 100svh;
+        padding: 1.5em;
+      }
+
+      .card-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        will-change: transform;
+      }
+
+      .card-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 150px;
+        overflow: hidden;
+      }
+
+      .card-img img {
+        transform: scale(2);
+      }
+
+      .card-content {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        z-index: 1;
+      }
+
+      .card-content .card-title {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+      }
+
+      .card-content .card-description {
+        text-align: center;
+        width: 40%;
+        margin-bottom: 3em;
+        position: relative;
+        transform: translateX(40px);
+        opacity: 0;
+      }
+
+      .card:nth-child(2) {
+        margin-top: 50vh;
+      }
+
+      .char {
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+      }
+
+      .char span {
+        transform: translateX(100%);
+        display: inline-block;
+        will-change: transform;
+      }
+
+.card-title h1,
+.card-description p,
+.intro h1,
+.outro h1 {
+  color: #fff;
+}
+
+      @media (max-width: 900px) {
+        h1 {
+          font-size: 2rem;
+          letter-spacing: 0;
+        }
+
+        .intro h1,
+        .outro h1 {
+          width: 100%;
+        }
+
+        .card-content .card-description {
+          width: 90%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .intro,
+        .outro,
+        .card {
+          padding: 1rem;
+        }
+
+        .intro {
+          min-height: 100svh;
+          min-height: 100dvh;
+          align-items: flex-end;
+          padding-bottom: 2rem;
+        }
+
+        .outro {
+          min-height: 75svh;
+          height: 75svh;
+        }
+
+        .intro h1,
+        .outro h1 {
+          width: 100%;
+          max-width: none;
+          font-size: clamp(1.9rem, 8.2vw, 3rem);
+          line-height: 1;
+        }
+
+        .cards {
+          gap: 12svh;
+        }
+
+        .card {
+          height: 72svh;
+          min-height: 72svh;
+        }
+
+        .card-img {
+          border-radius: 2rem;
+        }
+
+        .card-content .card-title {
+          top: 28%;
+        }
+
+        .card-content .card-title h1 {
+          font-size: 1.8rem;
+        }
+
+        .card-content .card-description {
+          width: calc(100% - 2rem);
+          margin-bottom: 1rem;
+          transform: none;
+          opacity: 1;
+        }
+
+        .card-marquee .marquee h1 {
+          font-size: 14vw;
+        }
+      }
+
+      /* ============ MAIN NAV (shared site nav) ============ */
+      .site-logo {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        opacity: 0.92;
+        transition: opacity 0.3s ease;
+      }
+
+      .site-logo:hover {
+        opacity: 1;
+      }
+
+      .site-logo img {
+        height: 32px;
+        width: auto;
+        display: block;
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.4));
+      }
+
+      .main-nav {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        gap: 0.15rem;
+        padding: 0.35rem;
+        border-radius: 4rem;
+        background-color: var(--nav-light);
+      }
+
+      .main-nav-link {
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: var(--nav-dark);
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 450;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        padding: 0.6rem 1.1rem;
+        border-radius: 4rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .main-nav-link:hover {
+        background-color: var(--nav-mid);
+        color: var(--nav-light);
+      }
+
+      .main-nav-link.active {
+        background-color: var(--nav-dark);
+        color: var(--nav-light);
+      }
+
+      @media (max-width: 800px) {
+        .site-logo {
+          top: 1rem;
+          left: 1rem;
+        }
+
+        .site-logo img {
+          height: 20px;
+        }
+
+        .main-nav {
+          top: 1rem;
+          right: 1rem;
+          left: 1rem;
+          justify-content: space-between;
+        }
+
+        .main-nav-link {
+          font-size: 0.65rem;
+          padding: 0.5rem 0.6rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="site-logo" aria-label="Srivaas Realty logo">
+      <img src="logo.png" alt="Srivaas Realty" />
+    </a>
+
+    <nav class="main-nav">
+      <a href="index.html" class="main-nav-link">Home</a>
+      <a href="interior.html" class="main-nav-link active">Interior</a>
+      <a href="exterior.html" class="main-nav-link">Exterior</a>
+      <a href="walkthrough.html" class="main-nav-link">Walkthrough</a>
+    </nav>
+
+    <section class="intro">
+      <video
+        class="intro-video"
+        src="https://mirx28.github.io/mokshavilla-videos/interior.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <div class="intro-overlay"></div>
+      <h1>Every room at Moksha is composed, not decorated.</h1>
+    </section>
+
+   <section class="cards">
+      <div class="card">
+        <div class="card-marquee">
+          <div class="marquee">
+            <h1>Warm Wood, Cold Stone</h1>
+            <h1>Built Around Light</h1>
+            <h1>Handcrafted Interiors</h1>
+            <h1>Himalayan Materials</h1>
+          </div>
+        </div>
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Living Room</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Double-height glazing frames the valley beyond, while a
+                fireplace and low, deep seating anchor the room in warmth.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-1.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Living Room</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Deep leather seating gathers around a stone hearth, built for
+                slow evenings and quiet conversation.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-2.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Living Room</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Raw stone walls meet warm timber joinery, framing views
+                straight through to the staircase and floors above.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-3.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Living Room</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A double-height void connects the ground floor to the gallery
+                above, drawing daylight deep into the space.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-4.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Dining Room</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A long stone table set beneath exposed timber beams, built for
+                gatherings that stretch late into the evening.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-5.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Kitchen</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A wood-fired kitchen built for slow mornings, finished in
+                honed stone and locally sourced timber cabinetry.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-6.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Kitchen</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                An island counter cut from a single stone slab, positioned to
+                keep the cook facing the mountains.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-7.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Master Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Set on the first floor, a private suite wrapped around the
+                pool garden, with a freestanding bath by the window.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-8.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Master Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Soft linen tones and warm timber flooring create a quiet
+                counterpoint to the stone and glass elsewhere in the home.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-9.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Master Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A private dressing area and ensuite complete the suite,
+                finished entirely in matching natural stone.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-10.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Upper Hallway</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A glass-railed walkway on the second floor connects the
+                bedroom wing, lit by a run of skylights above.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-11.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Upper Hallway</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Timber treads and blackened steel railings lead between
+                floors, framed by views back down into the living space.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-12.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Guest Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                One of four ensuite bedrooms on the second floor, opening onto
+                a shared veranda facing the mountain treeline.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-13.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Guest Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                Warm tones and generous built-in storage keep the room calm
+                and uncluttered, with the same stone detailing throughout.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-14.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Guest Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A private ensuite bath finished in the same honed stone found
+                throughout the residence's upper floor.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-15.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Final Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                The last of the second-floor suites, positioned at the far end
+                of the wing for maximum privacy and quiet.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-16.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-wrapper">
+          <div class="card-content">
+            <div class="card-title">
+              <h1>The Final Bedroom</h1>
+            </div>
+            <div class="card-description">
+              <p>
+                A corner room with dual-aspect windows, closing out the
+                second floor with views on two sides of the valley.
+              </p>
+            </div>
+          </div>
+          <div class="card-img">
+            <img src="card-img-17.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GSAP + plugins + Lenis via CDN -->
+    <script src="https://unpkg.com/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.13.0/dist/SplitText.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.3.3/dist/lenis.min.js"></script>
+
+    <script>
+      // ===================================================================
+      // MARQUEE (from marquee.js) — merged inline, no import/export
+      // ===================================================================
+      function setupMarqueeAnimation() {
+        const marqueeItems = gsap.utils.toArray(".marquee h1");
+        if (marqueeItems.length > 0) {
+          horizontalLoop(marqueeItems, {
+            repeat: -1,
+            paddingRight: 30,
+          });
+        }
+      }
+
+      function horizontalLoop(items, config) {
+        items = gsap.utils.toArray(items);
+        config = config || {};
+        let tl = gsap.timeline({
+          repeat: config.repeat,
+          defaults: { ease: "none" },
+        });
+        let length = items.length;
+        let startX = items[0].offsetLeft;
+        let widths = [];
+        let xPercents = [];
+        let pixelsPerSecond = (config.speed || 1) * 100;
+        let totalWidth, curX, distanceToStart, distanceToLoop, item, i;
+
+        gsap.set(items, {
+          xPercent: (i, el) => {
+            let w = (widths[i] = parseFloat(gsap.getProperty(el, "width", "px")));
+            xPercents[i] =
+              (parseFloat(gsap.getProperty(el, "x", "px")) / w) * 100 +
+              gsap.getProperty(el, "xPercent");
+            return xPercents[i];
+          },
+        });
+
+        gsap.set(items, { x: 0 });
+        totalWidth =
+          items[length - 1].offsetLeft +
+          (xPercents[length - 1] / 100) * widths[length - 1] -
+          startX +
+          items[length - 1].offsetWidth *
+            gsap.getProperty(items[length - 1], "scaleX") +
+          (parseFloat(config.paddingRight) || 0);
+
+        for (i = 0; i < length; i++) {
+          item = items[i];
+          curX = (xPercents[i] / 100) * widths[i];
+          distanceToStart = item.offsetLeft + curX - startX;
+          distanceToLoop =
+            distanceToStart + widths[i] * gsap.getProperty(item, "scaleX");
+          tl.to(
+            item,
+            {
+              xPercent: ((curX - distanceToLoop) / widths[i]) * 100,
+              duration: distanceToLoop / pixelsPerSecond,
+            },
+            0
+          ).fromTo(
+            item,
+            { xPercent: ((curX - distanceToLoop + totalWidth) / widths[i]) * 100 },
+            {
+              xPercent: xPercents[i],
+              duration:
+                (curX - distanceToLoop + totalWidth - curX) / pixelsPerSecond,
+              immediateRender: false,
+            },
+            distanceToLoop / pixelsPerSecond
+          );
+        }
+
+        tl.progress(1, true).progress(0, true);
+        return tl;
+      }
+
+      // ===================================================================
+      // MAIN SCRIPT (from script.js) — merged inline, no import/export
+      // ===================================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        gsap.registerPlugin(SplitText, ScrollTrigger);
+
+        const lenis = new Lenis({
+          duration: 1.05,
+          smoothWheel: true,
+          wheelMultiplier: 0.85,
+          touchMultiplier: 1.35,
+          lerp: 0.08,
+          syncTouch: true,
+        });
+        lenis.on("scroll", ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        const cards = gsap.utils.toArray(".card");
+        const introCard = cards[0];
+
+        const titles = gsap.utils.toArray(".card-title h1");
+        titles.forEach((title) => {
+          const split = new SplitText(title, {
+            type: "chars",
+            charsClass: "char",
+            tag: "div",
+          });
+          split.chars.forEach((char) => {
+            char.innerHTML = `<span>${char.textContent}</span>`;
+          });
+        });
+
+        const cardImgWrapper = introCard.querySelector(".card-img");
+        const cardImg = introCard.querySelector(".card-img img");
+        gsap.set(cardImgWrapper, { scale: 0.5, borderRadius: "400px" });
+        gsap.set(cardImg, { scale: 1.5 });
+
+        function animateContentIn(titleChars, description) {
+          gsap.to(titleChars, { x: "0%", duration: 0.75, ease: "power4.out" });
+          gsap.to(description, {
+            x: 0,
+            opacity: 1,
+            duration: 0.75,
+            delay: 0.1,
+            ease: "power4.out",
+          });
+        }
+
+        function animateContentOut(titleChars, description) {
+          gsap.to(titleChars, { x: "100%", duration: 0.5, ease: "power4.out" });
+          gsap.to(description, {
+            x: "40px",
+            opacity: 0,
+            duration: 0.5,
+            ease: "power4.out",
+          });
+        }
+
+        const marquee = introCard.querySelector(".card-marquee .marquee");
+        const titleChars = introCard.querySelectorAll(".char span");
+        const description = introCard.querySelector(".card-description");
+
+        ScrollTrigger.create({
+          trigger: introCard,
+          start: "top top",
+          end: "+=300vh",
+          onUpdate: (self) => {
+            const progress = self.progress;
+            const imgScale = 0.5 + progress * 0.5;
+            const borderRadius = 400 - progress * 375;
+            const innerImgScale = 1.5 - progress * 0.5;
+
+            gsap.set(cardImgWrapper, {
+              scale: imgScale,
+              borderRadius: borderRadius + "px",
+            });
+            gsap.set(cardImg, { scale: innerImgScale });
+
+            if (imgScale >= 0.5 && imgScale <= 0.75) {
+              const fadeProgress = (imgScale - 0.5) / (0.75 - 0.5);
+              gsap.set(marquee, { opacity: 1 - fadeProgress });
+            } else if (imgScale < 0.5) {
+              gsap.set(marquee, { opacity: 1 });
+            } else if (imgScale > 0.75) {
+              gsap.set(marquee, { opacity: 0 });
+            }
+
+            if (progress >= 1 && !introCard.contentRevealed) {
+              introCard.contentRevealed = true;
+              animateContentIn(titleChars, description);
+            }
+            if (progress < 1 && introCard.contentRevealed) {
+              introCard.contentRevealed = false;
+              animateContentOut(titleChars, description);
+            }
+          },
+        });
+
+        cards.forEach((card, index) => {
+          const isLastCard = index === cards.length - 1;
+          ScrollTrigger.create({
+            trigger: card,
+            start: "top top",
+            end: isLastCard ? "+=100vh" : "top top",
+            endTrigger: isLastCard ? null : cards[cards.length - 1],
+            pin: true,
+            pinSpacing: isLastCard,
+          });
+        });
+
+        cards.forEach((card, index) => {
+          if (index < cards.length - 1) {
+            const cardWrapper = card.querySelector(".card-wrapper");
+            ScrollTrigger.create({
+              trigger: cards[index + 1],
+              start: "top bottom",
+              end: "top top",
+              onUpdate: (self) => {
+                const progress = self.progress;
+                gsap.set(cardWrapper, {
+                  scale: 1 - progress * 0.25,
+                  opacity: 1 - progress,
+                });
+              },
+            });
+          }
+        });
+
+        cards.forEach((card, index) => {
+          if (index > 0) {
+            const cardImg = card.querySelector(".card-img img");
+            const imgContainer = card.querySelector(".card-img");
+            ScrollTrigger.create({
+              trigger: card,
+              start: "top bottom",
+              end: "top top",
+              onUpdate: (self) => {
+                const progress = self.progress;
+                gsap.set(cardImg, { scale: 2 - progress });
+                gsap.set(imgContainer, {
+                  borderRadius: 150 - progress * 125 + "px",
+                });
+              },
+            });
+          }
+        });
+
+        cards.forEach((card, index) => {
+          if (index === 0) return;
+
+          const cardDescription = card.querySelector(".card-description");
+          const cardTitleChars = card.querySelectorAll(".char span");
+
+          ScrollTrigger.create({
+            trigger: card,
+            start: "top top",
+            onEnter: () => animateContentIn(cardTitleChars, cardDescription),
+            onLeaveBack: () => animateContentOut(cardTitleChars, cardDescription),
+          });
+        });
+
+        setupMarqueeAnimation();
+      });
+    </script>
+  </body>
+</html>

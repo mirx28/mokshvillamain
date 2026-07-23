@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Srivaas Realty — Exterior</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+
+      :root {
+        --nav-dark: #181717;
+        --nav-light: #f5f5f5;
+        --nav-mid: #292725;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 100%;
+        font-family: "Host Grotesk", sans-serif;
+        background-color: #0f0f0f;
+        overflow-x: hidden;
+        overflow-y: auto;
+        overscroll-behavior-y: auto;
+        scroll-behavior: smooth;
+      }
+
+      img {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      h1 {
+        text-transform: uppercase;
+        font-weight: 700;
+        line-height: 1;
+      }
+
+      p {
+        font-size: 0.95rem;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+
+      /* ============ SITE LOGO ============ */
+      .site-logo {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        opacity: 0.92;
+        transition: opacity 0.3s ease;
+      }
+
+      .site-logo:hover {
+        opacity: 1;
+      }
+
+      .site-logo img {
+        height: 32px;
+        width: auto;
+        display: block;
+        filter: drop-shadow(0 1px 4px rgba(0,0,0,0.4));
+      }
+
+      @media (max-width: 800px) {
+        .site-logo {
+          top: 1rem;
+          left: 1rem;
+        }
+
+        .site-logo img {
+          height: 20px;
+        }
+      }
+
+      /* ============ MAIN NAV ============ */
+      .main-nav {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        gap: 0.15rem;
+        padding: 0.35rem;
+        border-radius: 4rem;
+        background-color: var(--nav-light);
+      }
+
+      .main-nav-link {
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: var(--nav-dark);
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 450;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+        padding: 0.6rem 1.1rem;
+        border-radius: 4rem;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .main-nav-link:hover {
+        background-color: var(--nav-mid);
+        color: var(--nav-light);
+      }
+
+      .main-nav-link.active {
+        background-color: var(--nav-dark);
+        color: var(--nav-light);
+      }
+
+      /* ============ INTRO (video background) ============ */
+      .intro {
+        position: relative;
+        width: 100vw;
+        height: 100svh;
+        padding: 1.5em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        text-align: center;
+        background-color: #141414;
+      }
+
+      .intro-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 0;
+        filter: brightness(0.72) saturate(1.08) contrast(1.02);
+      }
+
+      .intro-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(15, 15, 15, 0.5);
+        z-index: 1;
+      }
+
+      .intro h1 {
+        position: relative;
+        z-index: 2;
+        width: 60%;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 60px;
+        font-weight: 900;
+        letter-spacing: -2px;
+        line-height: 0.9;
+      }
+
+      .scroll-hint {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        animation: scrollPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes scrollPulse {
+        0%, 100% { opacity: 0.3; transform: translateX(-50%) translateY(0); }
+        50% { opacity: 0.8; transform: translateX(-50%) translateY(6px); }
+      }
+
+      /* ============ WARP SLIDER SECTION ============ */
+      .slider-section {
+        position: relative;
+        width: 100vw;
+        height: 100svh;
+        overflow: hidden;
+      }
+
+      .slider {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        overflow: hidden;
+        cursor: pointer;
+      }
+
+      canvas {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      .slider-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .slide-title {
+        position: absolute;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        text-align: center;
+      }
+
+      .slide-title h1 {
+        font-size: 7vw;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      .slide-description {
+        position: absolute;
+        top: 62%;
+        left: 60%;
+        transform: translate(-50%, -50%);
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .slide-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      .slide-info p {
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        opacity: 0.7;
+      }
+
+      .slide-title h1 {
+        display: flex;
+        justify-content: center;
+        gap: 0.2em;
+      }
+
+      .slide-title h1 .word {
+        display: flex;
+      }
+
+      .slide-title h1 .char {
+        display: block;
+      }
+
+      .char,
+      .line {
+        overflow: hidden;
+      }
+
+      .char span,
+      .line span {
+        display: inline-block;
+        will-change: transform;
+        position: relative;
+      }
+
+      .slide-counter {
+        position: absolute;
+        bottom: 2.5rem;
+        left: 2.5rem;
+        z-index: 3;
+        color: rgba(255, 255, 255, 0.6);
+        font-size: 0.8rem;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        pointer-events: none;
+      }
+
+      .slide-counter .current {
+        color: #fff;
+        font-weight: 600;
+      }
+
+      .click-hint {
+        position: absolute;
+        bottom: 2.5rem;
+        right: 2.5rem;
+        z-index: 3;
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+
+      .click-hint.hidden {
+        opacity: 0;
+      }
+
+      /* ============ RESPONSIVE ============ */
+      @media (max-width: 1000px) {
+        .slide-title {
+          top: 50%;
+        }
+
+        .slide-description {
+          width: 75%;
+          text-align: center;
+          top: unset;
+          bottom: 12%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+
+        .intro h1 {
+          width: 100%;
+          font-size: 2rem;
+          letter-spacing: 0;
+        }
+      }
+
+      @media (max-width: 800px) {
+        .main-nav {
+          top: 1rem;
+          right: 1rem;
+          left: 1rem;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          padding: 0.45rem;
+        }
+
+        .main-nav-link {
+          font-size: 0.65rem;
+          padding: 0.5rem 0.6rem;
+        }
+
+        .slide-title h1 {
+          font-size: 12vw;
+        }
+
+        .slide-counter {
+          bottom: 1.5rem;
+          left: 1.5rem;
+          font-size: 0.7rem;
+        }
+
+        .click-hint {
+          bottom: 1.5rem;
+          right: 1.5rem;
+          font-size: 0.65rem;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .intro {
+          padding: 1rem;
+        }
+
+        .intro h1 {
+          font-size: clamp(2rem, 9vw, 3rem);
+          line-height: 1;
+        }
+
+        .slide-description {
+          width: calc(100% - 2rem);
+          left: 50%;
+          bottom: 4.5rem;
+          gap: 1rem;
+          padding: 0 0.5rem;
+        }
+
+        .slide-description p {
+          font-size: 0.84rem;
+        }
+
+        .slide-info {
+          gap: 0.25rem;
+        }
+
+        .slide-info p {
+          font-size: 0.65rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="index.html" class="site-logo">
+      <img src="logo.png" alt="Srivaas Realty" />
+    </a>
+    <nav class="main-nav">
+      <a href="index.html" class="main-nav-link">Home</a>
+      <a href="interior.html" class="main-nav-link">Interior</a>
+      <a href="exterior.html" class="main-nav-link active">Exterior</a>
+      <a href="walkthrough.html" class="main-nav-link">Walkthrough</a>
+    </nav>
+
+    <!-- ============ INTRO ============ -->
+    <section class="intro">
+      <video
+        class="intro-video"
+        src="https://mirx28.github.io/mokshavilla-videos/exterior.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <div class="intro-overlay"></div>
+      <h1>Moksha meets the mountain on its own terms.</h1>
+      <div class="scroll-hint">Scroll</div>
+    </section>
+
+    <!-- ============ WARP SLIDER ============ -->
+    <section class="slider-section">
+      <div class="slider">
+        <canvas></canvas>
+        <div class="slider-content">
+          <div class="slide-title">
+            <h1>Mountain Modern</h1>
+          </div>
+          <div class="slide-description">
+            <p>Architecture carved into the hillside.</p>
+            <div class="slide-info">
+              <p>Exterior · 2026</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-counter"><span class="current">01</span> / 10</div>
+      <div class="click-hint">Click to explore</div>
+    </section>
+
+    <!-- ============ GSAP (CDN) ============ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- ============ LENIS (CDN) ============ -->
+    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+    <!-- ============ THREE.JS (importmap) ============ -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.177.0/build/three.module.js"
+        }
+      }
+    </script>
+
+    <!-- ============ WARP SLIDER LOGIC (Three.js) ============ -->
+    <script type="module">
+      import * as THREE from "three";
+      const gsap = window.gsap;
+      gsap.config({ nullTargetWarn: false });
+
+      /* ============ SLIDE DATA ============ */
+      const slides = [
+        {
+          title: "Mountain Modern",
+          description: "Architecture carved into the hillside.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img1.jpeg",
+        },
+        {
+          title: "Stone & Timber",
+          description: "Locally quarried, aging gracefully.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img2.jpeg",
+        },
+        {
+          title: "Glass Pavilion",
+          description: "Glazing dissolves inside and out.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img3.jpeg",
+        },
+        {
+          title: "Terraced Gardens",
+          description: "Stone gardens stitch into the mountain.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img4.jpeg",
+        },
+        {
+          title: "Night Silhouette",
+          description: "A lantern on the ridge at dusk.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img5.jpeg",
+        },
+        {
+          title: "Cantilevered Edge",
+          description: "Volumes floating over the slope.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img6.jpeg",
+        },
+        {
+          title: "Valley Frame",
+          description: "Framing the Himalayan horizon.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img7.jpeg",
+        },
+        {
+          title: "Stone Pathways",
+          description: "Hand-laid paths through the estate.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img8.jpeg",
+        },
+        {
+          title: "Water Court",
+          description: "Still water reflecting the sky.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img9.jpeg",
+        },
+        {
+          title: "Dawn Light",
+          description: "First light on the eastern facade.",
+          type: "Exterior",
+          field: "2026",
+          date: "",
+          image: "assets/img10.jpeg",
+        },
+      ];
+
+      /* ============ SHADERS ============ */
+      const vertexShader = `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `;
+
+      const fragmentShader = `
+        uniform sampler2D uTexture1;
+        uniform sampler2D uTexture2;
+        uniform float uProgress;
+        uniform vec2 uResolution;
+        uniform vec2 uTexture1Size;
+        uniform vec2 uTexture2Size;
+        varying vec2 vUv;
+
+        vec2 getCoverUV(vec2 uv, vec2 textureSize) {
+          vec2 s = uResolution / textureSize;
+          float scale = max(s.x, s.y);
+          vec2 scaledSize = textureSize * scale;
+          vec2 offset = (uResolution - scaledSize) * 0.5;
+          return (uv * uResolution - offset) / scaledSize;
+        }
+
+        vec2 getDistortedUv(vec2 uv, vec2 direction, float factor) {
+          vec2 scaledDirection = direction;
+          scaledDirection.y *= 2.0;
+          return uv - scaledDirection * factor;
+        }
+
+        struct LensDistortion {
+          vec2 distortedUV;
+          float inside;
+        };
+
+        LensDistortion getLensDistortion(
+          vec2 p,
+          vec2 uv,
+          vec2 sphereCenter,
+          float sphereRadius,
+          float focusFactor
+        ) {
+          vec2 distortionDirection = normalize(p - sphereCenter);
+          float focusRadius = sphereRadius * focusFactor;
+          float focusStrength = sphereRadius / 3000.0;
+          float focusSdf = length(sphereCenter - p) - focusRadius;
+          float sphereSdf = length(sphereCenter - p) - sphereRadius;
+          float inside = smoothstep(0.0, 1.0, -sphereSdf / (sphereRadius * 0.001));
+
+          float magnifierFactor = focusSdf / (sphereRadius - focusRadius);
+          float mFactor = clamp(magnifierFactor * inside, 0.0, 1.0);
+          mFactor = pow(mFactor, 5.0);
+
+          float distortionFactor = mFactor * focusStrength;
+          vec2 distortedUV = getDistortedUv(uv, distortionDirection, distortionFactor);
+
+          return LensDistortion(distortedUV, inside);
+        }
+
+        void main() {
+          vec2 center = vec2(0.5, 0.5);
+          vec2 p = vUv * uResolution;
+
+          vec2 uv1 = getCoverUV(vUv, uTexture1Size);
+          vec2 uv2 = getCoverUV(vUv, uTexture2Size);
+
+          float maxRadius = length(uResolution) * 1.5;
+          float bubbleRadius = uProgress * maxRadius;
+          vec2 sphereCenter = center * uResolution;
+          float focusFactor = 0.25;
+
+          float dist = length(sphereCenter - p);
+          float mask = step(bubbleRadius, dist);
+
+          vec4 currentImg = texture2D(uTexture1, uv1);
+
+          LensDistortion distortion = getLensDistortion(
+            p, uv2, sphereCenter, bubbleRadius, focusFactor
+          );
+
+          vec4 newImg = texture2D(uTexture2, distortion.distortedUV);
+
+          float finalMask = max(mask, 1.0 - distortion.inside);
+          vec4 color = mix(newImg, currentImg, finalMask);
+
+          gl_FragColor = color;
+        }
+      `;
+
+      /* ============ STATE ============ */
+      let currentSlideIndex = 0;
+      let isTransitioning = false;
+      let slideTextures = [];
+      let shaderMaterial, renderer;
+      let firstClick = true;
+
+      /* ============ TEXT SPLITTING ============ */
+      const createCharacterElements = (element) => {
+        if (element.querySelectorAll(".char").length > 0) return;
+
+        const words = element.textContent.split(" ");
+        element.innerHTML = "";
+
+        words.forEach((word, index) => {
+          const wordDiv = document.createElement("div");
+          wordDiv.className = "word";
+
+          [...word].forEach((char) => {
+            const charDiv = document.createElement("div");
+            charDiv.className = "char";
+            charDiv.innerHTML = `<span>${char}</span>`;
+            wordDiv.appendChild(charDiv);
+          });
+
+          element.appendChild(wordDiv);
+
+          if (index < words.length - 1) {
+            const spaceChar = document.createElement("div");
+            spaceChar.className = "word";
+            spaceChar.innerHTML = '<div class="char"><span> </span></div>';
+            element.appendChild(spaceChar);
+          }
+        });
+      };
+
+      const createLineElements = (element) => {
+        const text = element.textContent;
+        element.innerHTML = `<div class="line"><span>${text}</span></div>`;
+      };
+
+      const processTextElements = (container) => {
+        const title = container.querySelector(".slide-title h1");
+        if (title) createCharacterElements(title);
+
+        container
+          .querySelectorAll(".slide-description p")
+          .forEach(createLineElements);
+      };
+
+      /* ============ SLIDE CONTENT CREATION ============ */
+      const createSlideElement = (slideData) => {
+        const content = document.createElement("div");
+        content.className = "slider-content";
+        content.style.opacity = "0";
+
+        content.innerHTML = `
+          <div class="slide-title"><h1>${slideData.title}</h1></div>
+          <div class="slide-description">
+            <p>${slideData.description}</p>
+            <div class="slide-info">
+              <p>${slideData.type} · ${slideData.field}</p>
+            </div>
+          </div>
+        `;
+
+        return content;
+      };
+
+      /* ============ TRANSITION ANIMATION ============ */
+      const animateSlideTransition = (nextIndex) => {
+        const currentContent = document.querySelector(".slider-content");
+        const slider = document.querySelector(".slider");
+
+        const timeline = gsap.timeline();
+
+        timeline
+          .to([...currentContent.querySelectorAll(".char span")], {
+            y: "-100%",
+            duration: 0.6,
+            stagger: 0.025,
+            ease: "power2.inOut",
+          })
+          .to(
+            [...currentContent.querySelectorAll(".line span")],
+            {
+              y: "-100%",
+              duration: 0.6,
+              stagger: 0.025,
+              ease: "power2.inOut",
+            },
+            0.1
+          )
+          .call(
+            () => {
+              const newContent = createSlideElement(slides[nextIndex]);
+
+              timeline.kill();
+              currentContent.remove();
+              slider.appendChild(newContent);
+
+              gsap.set(newContent.querySelectorAll("span"), { y: "100%" });
+
+              setTimeout(() => {
+                processTextElements(newContent);
+
+                const newChars = newContent.querySelectorAll(".char span");
+                const newLines = newContent.querySelectorAll(".line span");
+
+                gsap.set([newChars, newLines], { y: "100%" });
+                gsap.set(newContent, { opacity: 1 });
+
+                gsap
+                  .timeline({
+                    onComplete: () => {
+                      isTransitioning = false;
+                      currentSlideIndex = nextIndex;
+                    },
+                  })
+                  .to(newChars, {
+                    y: "0%",
+                    duration: 0.5,
+                    stagger: 0.025,
+                    ease: "power2.inOut",
+                  })
+                  .to(
+                    newLines,
+                    { y: "0%", duration: 0.5, stagger: 0.1, ease: "power2.inOut" },
+                    0.3
+                  );
+              }, 100);
+            },
+            null,
+            0.5
+          );
+      };
+
+      /* ============ INITIAL SLIDE SETUP ============ */
+      const setupInitialSlide = () => {
+        const content = document.querySelector(".slider-content");
+
+        processTextElements(content);
+
+        const chars = content.querySelectorAll(".char span");
+        const lines = content.querySelectorAll(".line span");
+
+        gsap.fromTo(
+          chars,
+          { y: "100%" },
+          { y: "0%", duration: 0.8, stagger: 0.025, ease: "power2.out" }
+        );
+        gsap.fromTo(
+          lines,
+          { y: "100%" },
+          { y: "0%", duration: 0.8, stagger: 0.025, ease: "power2.out", delay: 0.2 }
+        );
+      };
+
+      /* ============ RENDERER ============ */
+      const initializeRenderer = async () => {
+        const scene = new THREE.Scene();
+        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+
+        const canvas = document.querySelector("canvas");
+        renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+        });
+
+        const sliderSection = document.querySelector(".slider-section");
+        const w = sliderSection.offsetWidth;
+        const h = sliderSection.offsetHeight;
+        renderer.setSize(w, h);
+
+        shaderMaterial = new THREE.ShaderMaterial({
+          uniforms: {
+            uTexture1: { value: null },
+            uTexture2: { value: null },
+            uProgress: { value: 0.0 },
+            uResolution: { value: new THREE.Vector2(w, h) },
+            uTexture1Size: { value: new THREE.Vector2(1, 1) },
+            uTexture2Size: { value: new THREE.Vector2(1, 1) },
+          },
+          vertexShader,
+          fragmentShader,
+        });
+
+        scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterial));
+
+        const loader = new THREE.TextureLoader();
+        for (const slide of slides) {
+          try {
+            const texture = await new Promise((resolve, reject) =>
+              loader.load(slide.image, resolve, undefined, reject)
+            );
+            texture.minFilter = texture.magFilter = THREE.LinearFilter;
+            texture.userData = {
+              size: new THREE.Vector2(texture.image.width, texture.image.height),
+            };
+            slideTextures.push(texture);
+          } catch (e) {
+            console.warn("Failed to load texture:", slide.image);
+            const fallback = new THREE.DataTexture(
+              new Uint8Array([20, 20, 20, 255]),
+              1,
+              1,
+              THREE.RGBAFormat
+            );
+            fallback.needsUpdate = true;
+            fallback.userData = { size: new THREE.Vector2(1, 1) };
+            slideTextures.push(fallback);
+          }
+        }
+
+        shaderMaterial.uniforms.uTexture1.value = slideTextures[0];
+        shaderMaterial.uniforms.uTexture2.value = slideTextures[1 % slideTextures.length];
+        shaderMaterial.uniforms.uTexture1Size.value = slideTextures[0].userData.size;
+        shaderMaterial.uniforms.uTexture2Size.value = slideTextures[1 % slideTextures.length].userData.size;
+
+        const render = () => {
+          requestAnimationFrame(render);
+          renderer.render(scene, camera);
+        };
+        render();
+      };
+
+      /* ============ SLIDE CHANGE ============ */
+      const handleSlideChange = () => {
+        if (isTransitioning) return;
+        if (slideTextures.length < 2) return;
+
+        isTransitioning = true;
+        const nextIndex = (currentSlideIndex + 1) % slides.length;
+
+        shaderMaterial.uniforms.uTexture1.value = slideTextures[currentSlideIndex];
+        shaderMaterial.uniforms.uTexture2.value = slideTextures[nextIndex];
+        shaderMaterial.uniforms.uTexture1Size.value =
+          slideTextures[currentSlideIndex].userData.size;
+        shaderMaterial.uniforms.uTexture2Size.value =
+          slideTextures[nextIndex].userData.size;
+
+        animateSlideTransition(nextIndex);
+
+        const counterEl = document.querySelector(".slide-counter .current");
+        if (counterEl) {
+          counterEl.textContent = String(nextIndex + 1).padStart(2, "0");
+        }
+
+        if (firstClick) {
+          firstClick = false;
+          const hint = document.querySelector(".click-hint");
+          if (hint) hint.classList.add("hidden");
+        }
+
+        gsap.fromTo(
+          shaderMaterial.uniforms.uProgress,
+          { value: 0 },
+          {
+            value: 1,
+            duration: 2.5,
+            ease: "power2.inOut",
+            onComplete: () => {
+              shaderMaterial.uniforms.uProgress.value = 0;
+              shaderMaterial.uniforms.uTexture1.value = slideTextures[nextIndex];
+              shaderMaterial.uniforms.uTexture1Size.value =
+                slideTextures[nextIndex].userData.size;
+            },
+          }
+        );
+      };
+
+      /* ============ RESIZE ============ */
+      const handleResize = () => {
+        if (!renderer) return;
+        const sliderSection = document.querySelector(".slider-section");
+        const w = sliderSection.offsetWidth;
+        const h = sliderSection.offsetHeight;
+        renderer.setSize(w, h);
+        shaderMaterial.uniforms.uResolution.value.set(w, h);
+      };
+
+      /* ============ INIT ============ */
+      window.addEventListener("load", () => {
+        setupInitialSlide();
+        initializeRenderer();
+      });
+
+      const sliderEl = document.querySelector(".slider");
+      sliderEl.addEventListener("click", handleSlideChange);
+
+      window.addEventListener("resize", handleResize);
+    </script>
+  </body>
+</html>
