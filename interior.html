@@ -164,14 +164,23 @@
         z-index: 1;
       }
 
-      .card-content .card-title {
-        width: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-      }
+      .card-content .card-description {
+  text-align: left;
+  width: 50%;
+  max-width: 400px;
+  margin-bottom: 2em;
+  margin-left: 2rem;
+  position: relative;
+  transform: translateX(40px);
+  opacity: 0;
+}
+
+.card-content .card-description p {
+  font-size: 0.95rem;
+  line-height: 1.4;
+  opacity: 0.85;
+}
+
 
       .card-content .card-description {
         text-align: center;
@@ -390,7 +399,7 @@
         playsinline
       ></video>
       <div class="intro-overlay"></div>
-      <h1>Every room at Moksha is composed, not decorated.</h1>
+      <h1>Every room at Agar Villas is composed, not decorated.</h1>
     </section>
 
    <section class="cards">
