@@ -182,6 +182,16 @@ body.page-entering {
   padding-bottom: 0.05em;
   overflow: visible;
 }
+/* ============ HERO LOGO IMAGE ============ */
+/* ============ HERO LOGO IMAGE ============ */
+.hero-logo {
+  width: auto;
+  height: auto;
+  max-width: 70%;
+  max-height: 18rem;
+  object-fit: contain;
+  display: block;
+}
 
 .hero-footer {
   position: absolute;
