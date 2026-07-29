@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Srivaas Realty — Maps</title>
+    <meta name="description" content="Master site plan and estate layout of Agar Villas in Kasmoli, Rishikesh. View property zones, plot distribution, and landscape design." />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap");
@@ -673,6 +674,56 @@
           display: none;
         }
       }
+
+      /* ============ SITE FOOTER ============ */
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        padding: 2.2rem 6vw;
+        border-top: 1px solid var(--line-2);
+      }
+
+      .site-footer .footer-copy,
+      .site-footer .footer-location {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin: 0;
+      }
+
+      .site-footer .footer-enquire {
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--nav-dark);
+        background: var(--gold);
+        text-decoration: none;
+        padding: 0.75rem 2rem;
+        border-radius: 4rem;
+        transition: transform 0.3s ease, background 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .site-footer .footer-enquire:hover {
+        transform: translateY(-2px);
+        background: #e8d5ae;
+      }
+
+      @media (max-width: 640px) {
+        .site-footer {
+          flex-direction: column;
+          text-align: center;
+          padding: 2rem 6vw;
+        }
+      }
     </style>
   </head>
   <body>
@@ -843,6 +894,13 @@
       <a href="index.html" class="outro-cta">Back to the Estate</a>
     </section>
 
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+      <p class="footer-copy">Copyright &copy; Srivaas Realty. All Rights Reserved.</p>
+      <a href="https://wa.me/917505091761?text=Hi%2C%20I%27m%20interested%20in%20Agar%20Villas%20%E2%80%94%20Rishikesh." target="_blank" rel="noopener noreferrer" class="footer-enquire">Enquire</a>
+      <p class="footer-location">2026, Rishikesh</p>
+    </footer>
+
     <!-- GSAP + ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -857,12 +915,12 @@
       let lenis = null;
       if (window.Lenis) {
         lenis = new Lenis({
-          duration: 1.15,
+          duration: 1.05,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
-          wheelMultiplier: 0.8,
+          wheelMultiplier: 0.95,
           touchMultiplier: 1.5,
-          lerp: 0.08,
+          lerp: 0.09,
           syncTouch: true,
         });
         lenis.on("scroll", ScrollTrigger.update);
