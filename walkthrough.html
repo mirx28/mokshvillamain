@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Srivaas Realty — Walkthrough</title>
+    <meta name="description" content="Virtual walkthrough of Agar Villas construction, interior spaces, and exterior views. Experience the estate journey through video and animation." />
+    <link rel="preconnect" href="https://mirx28.github.io" crossorigin />
+    <link rel="dns-prefetch" href="https://mirx28.github.io" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap");
@@ -603,6 +606,56 @@
           bottom: 1.25rem;
         }
       }
+
+      /* ============ SITE FOOTER ============ */
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        padding: 2.2rem 6vw;
+        border-top: 1px solid var(--line-2);
+      }
+
+      .site-footer .footer-copy,
+      .site-footer .footer-location {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin: 0;
+      }
+
+      .site-footer .footer-enquire {
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: var(--nav-dark);
+        background: #d4b98c;
+        text-decoration: none;
+        padding: 0.75rem 2rem;
+        border-radius: 4rem;
+        transition: transform 0.3s ease, background 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .site-footer .footer-enquire:hover {
+        transform: translateY(-2px);
+        background: #e8d5ae;
+      }
+
+      @media (max-width: 640px) {
+        .site-footer {
+          flex-direction: column;
+          text-align: center;
+          padding: 2rem 6vw;
+        }
+      }
     </style>
   </head>
   <body>
@@ -654,7 +707,7 @@
 
     <!-- Chapter 01 — Construction -->
     <section class="chapter ch-01" id="ch01">
-      <video class="chapter-video" id="video01" src="https://mirx28.github.io/mokshavilla-videos/construction.mp4" muted playsinline preload="auto"></video>
+      <video class="chapter-video" id="video01" src="https://mirx28.github.io/mokshavilla-videos/construction.mp4" poster="posters/construction-poster.jpg" muted playsinline preload="auto" fetchpriority="high"></video>
       <div class="chapter-vignette"></div>
       <div class="ch-loading" id="loading01">Loading Construction</div>
       <div class="ch-number" id="num01">01</div>
@@ -668,7 +721,7 @@
 
     <!-- Chapter 02 — Interior -->
     <section class="chapter ch-02" id="ch02">
-      <video class="chapter-video" id="video02" src="https://mirx28.github.io/mokshavilla-videos/interior3.mp4" muted playsinline preload="auto"></video>
+      <video class="chapter-video" id="video02" src="https://mirx28.github.io/mokshavilla-videos/interior3.mp4" poster="posters/interior3-poster.jpg" muted playsinline preload="none"></video>
       <div class="chapter-vignette"></div>
       <div class="ch-loading" id="loading02">Loading Interior</div>
       <div class="ch-number" id="num02">02</div>
@@ -682,7 +735,7 @@
 
     <!-- Chapter 03 — Exterior -->
     <section class="chapter ch-03" id="ch03">
-      <video class="chapter-video" id="video03" src="https://mirx28.github.io/mokshavilla-videos/exterior1.mp4" muted playsinline preload="auto"></video>
+      <video class="chapter-video" id="video03" src="https://mirx28.github.io/mokshavilla-videos/exterior1.mp4" poster="posters/exterior1-poster.jpg" muted playsinline preload="none"></video>
       <div class="chapter-vignette"></div>
       <div class="ch-loading" id="loading03">Loading Exterior</div>
       <div class="ch-number" id="num03">03</div>
@@ -702,7 +755,14 @@
       <h1>Every angle <br>Every detail <br><span class="italic">Agar Villas</span></h1>
       <p class="outro-meta">Srivaas Realty — 2026</p>
     </section>
-s
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+      <p class="footer-copy">Copyright &copy; Srivaas Realty. All Rights Reserved.</p>
+      <a href="https://wa.me/917505091761?text=Hi%2C%20I%27m%20interested%20in%20Agar%20Villas%20%E2%80%94%20Rishikesh." target="_blank" rel="noopener noreferrer" class="footer-enquire">Enquire</a>
+      <p class="footer-location">2026, Rishikesh</p>
+    </footer>
+
     <!-- GSAP + ScrollTrigger -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -717,12 +777,12 @@ s
       let lenis = null;
       if (window.Lenis) {
         lenis = new Lenis({
-          duration: 1.15,
+          duration: 1.05,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
-          wheelMultiplier: 0.8,
+          wheelMultiplier: 0.95,
           touchMultiplier: 1.5,
-          lerp: 0.08,
+          lerp: 0.09,
           syncTouch: true,
         });
         lenis.on("scroll", ScrollTrigger.update);
@@ -862,6 +922,37 @@ s
 
       // Shared state for each chapter's video duration (updates when metadata loads)
       const chapterDurations = [0, 0, 0];
+
+      // ============ STAGGERED VIDEO LOADING ============
+      // All 3 videos together are ~30MB. Loading them all at once (preload="auto"
+      // on every <video>) makes every one of them slower to arrive, including the
+      // one the visitor is actually watching. Chapter 1 loads immediately; chapters
+      // 2 & 3 are upgraded to preload="auto" + .load() only once the visitor is
+      // approaching them, so bandwidth isn't split three ways up front.
+      function beginLoadingChapterVideo(index) {
+        const ch = chapters[index];
+        if (!ch) return;
+        const video = document.getElementById(ch.videoId);
+        if (!video || video.dataset.loadStarted) return;
+        video.dataset.loadStarted = "true";
+        video.preload = "auto";
+        video.load();
+      }
+
+      document.getElementById("video01").dataset.loadStarted = "true";
+
+      // Start fetching chapter 2 once chapter 1's section begins approaching
+      // (well before it's actually needed), and chapter 3 once chapter 2 begins.
+      ScrollTrigger.create({
+        trigger: "#ch01",
+        start: "top center",
+        onEnter: () => beginLoadingChapterVideo(1),
+      });
+      ScrollTrigger.create({
+        trigger: "#ch02",
+        start: "top center",
+        onEnter: () => beginLoadingChapterVideo(2),
+      });
 
       chapters.forEach((ch, index) => {
         const section = document.getElementById(ch.id);
