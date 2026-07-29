@@ -4,8 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Srivaas Realty — Exterior</title>
+    <meta name="description" content="Exterior and landscape design of Agar Villas: stone architecture, glass features, lawns, courtyard pool, and estate grounds in Rishikesh foothills." />
+    <link rel="preconnect" href="https://mirx28.github.io" crossorigin />
+    <link rel="dns-prefetch" href="https://mirx28.github.io" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap");
 
       :root {
         --nav-dark: #181717;
@@ -149,6 +153,12 @@
         object-position: center center;
         z-index: 0;
         filter: brightness(0.72) saturate(1.08) contrast(1.02);
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .intro-video.is-ready {
+        opacity: 1;
       }
 
       .intro-overlay {
@@ -408,7 +418,58 @@
           font-size: 0.65rem;
         }
       }
+
+      /* ============ SITE FOOTER ============ */
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        padding: 2.2rem 6vw;
+        border-top: 1px solid rgba(245, 245, 245, 0.08);
+      }
+
+      .site-footer .footer-copy,
+      .site-footer .footer-location {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(245, 245, 245, 0.5);
+        margin: 0;
+      }
+
+      .site-footer .footer-enquire {
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #181717;
+        background: #d4b98c;
+        text-decoration: none;
+        padding: 0.75rem 2rem;
+        border-radius: 4rem;
+        transition: transform 0.3s ease, background 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .site-footer .footer-enquire:hover {
+        transform: translateY(-2px);
+        background: #e8d5ae;
+      }
+
+      @media (max-width: 640px) {
+        .site-footer {
+          flex-direction: column;
+          text-align: center;
+          padding: 2rem 6vw;
+        }
+      }
     </style>
+    <link rel="preload" as="video" href="https://mirx28.github.io/mokshavilla-videos/exterior.mp4" type="video/mp4" />
   </head>
   <body>
     <a href="index.html" class="site-logo">
@@ -427,10 +488,15 @@
       <video
         class="intro-video"
         src="https://mirx28.github.io/mokshavilla-videos/exterior.mp4"
+        poster="posters/exterior-poster.jpg"
+        preload="auto"
+        fetchpriority="high"
         autoplay
         muted
         loop
         playsinline
+        preload="auto"
+        onloadeddata="this.classList.add('is-ready')"
       ></video>
       <div class="intro-overlay"></div>
       <h1>Agar Villas meets the mountain on its own terms.</h1>
@@ -457,12 +523,20 @@
       <div class="click-hint">Click to explore</div>
     </section>
 
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+      <p class="footer-copy">Copyright &copy; Srivaas Realty. All Rights Reserved.</p>
+      <a href="https://wa.me/917505091761?text=Hi%2C%20I%27m%20interested%20in%20Agar%20Villas%20%E2%80%94%20Rishikesh." target="_blank" rel="noopener noreferrer" class="footer-enquire">Enquire</a>
+      <p class="footer-location">2026, Rishikesh</p>
+    </footer>
+
     <!-- ============ GSAP (CDN) ============ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-    <!-- ============ LENIS (CDN) ============ -->
-    <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- This page uses plain native browser scrolling — no Lenis/smooth-scroll
+         layer. It's just two full-height sections with no scroll-linked
+         animation, so native scroll is simpler and avoids any smooth-scroll
+         library interfering with page height / wheel handling. -->
 
     <!-- ============ THREE.JS (importmap) ============ -->
     <script type="importmap">
@@ -658,7 +732,7 @@
       let currentSlideIndex = 0;
       let isTransitioning = false;
       let slideTextures = [];
-      let shaderMaterial, renderer;
+      let shaderMaterial, renderer, scene, camera;
       let firstClick = true;
 
       /* ============ TEXT SPLITTING ============ */
@@ -814,8 +888,8 @@
 
       /* ============ RENDERER ============ */
       const initializeRenderer = async () => {
-        const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+        scene = new THREE.Scene();
+        camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
 
         const canvas = document.querySelector("canvas");
         renderer = new THREE.WebGLRenderer({
@@ -844,7 +918,7 @@
         scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shaderMaterial));
 
         const loader = new THREE.TextureLoader();
-        for (const slide of slides) {
+        const loadTexture = async (slide) => {
           try {
             const texture = await new Promise((resolve, reject) =>
               loader.load(slide.image, resolve, undefined, reject)
@@ -853,7 +927,7 @@
             texture.userData = {
               size: new THREE.Vector2(texture.image.width, texture.image.height),
             };
-            slideTextures.push(texture);
+            return texture;
           } catch (e) {
             console.warn("Failed to load texture:", slide.image);
             const fallback = new THREE.DataTexture(
@@ -864,20 +938,29 @@
             );
             fallback.needsUpdate = true;
             fallback.userData = { size: new THREE.Vector2(1, 1) };
-            slideTextures.push(fallback);
+            return fallback;
           }
-        }
+        };
+
+        // Load every slide image in parallel instead of one-at-a-time.
+        const loadedTextures = await Promise.all(slides.map(loadTexture));
+        slideTextures.push(...loadedTextures);
 
         shaderMaterial.uniforms.uTexture1.value = slideTextures[0];
         shaderMaterial.uniforms.uTexture2.value = slideTextures[1 % slideTextures.length];
         shaderMaterial.uniforms.uTexture1Size.value = slideTextures[0].userData.size;
         shaderMaterial.uniforms.uTexture2Size.value = slideTextures[1 % slideTextures.length].userData.size;
 
-        const render = () => {
-          requestAnimationFrame(render);
-          renderer.render(scene, camera);
-        };
-        render();
+        // ============ ON-DEMAND RENDERING ============
+        // The shader only changes during a slide transition (uProgress) or on
+        // resize — there is no continuous time-based animation. Rendering every
+        // frame forever wastes GPU budget and steals frames from smooth scroll.
+        // Render once here; handleSlideChange/handleResize trigger re-renders.
+        renderer.render(scene, camera);
+      };
+
+      const renderFrame = () => {
+        if (renderer && scene && camera) renderer.render(scene, camera);
       };
 
       /* ============ SLIDE CHANGE ============ */
@@ -915,11 +998,13 @@
             value: 1,
             duration: 2.5,
             ease: "power2.inOut",
+            onUpdate: renderFrame,
             onComplete: () => {
               shaderMaterial.uniforms.uProgress.value = 0;
               shaderMaterial.uniforms.uTexture1.value = slideTextures[nextIndex];
               shaderMaterial.uniforms.uTexture1Size.value =
                 slideTextures[nextIndex].userData.size;
+              renderFrame();
             },
           }
         );
@@ -933,6 +1018,7 @@
         const h = sliderSection.offsetHeight;
         renderer.setSize(w, h);
         shaderMaterial.uniforms.uResolution.value.set(w, h);
+        renderFrame();
       };
 
       /* ============ INIT ============ */
