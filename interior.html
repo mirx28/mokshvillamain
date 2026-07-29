@@ -4,9 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Srivaas Realty — Interior</title>
+    <meta name="description" content="Interior design of Agar Villas: wood-fired kitchen, bedroom suites, living areas arranged around the pool garden. Sustainable materials and Himalayan aesthetics." />
+    <link rel="preconnect" href="https://mirx28.github.io" crossorigin />
+    <link rel="dns-prefetch" href="https://mirx28.github.io" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&display=swap");
 
       :root {
         --nav-dark: #181717;
@@ -78,6 +82,12 @@
         object-position: center center;
         z-index: 0;
         filter: brightness(0.76) saturate(1.06) contrast(1.04);
+        opacity: 0;
+        transition: opacity 1s ease;
+      }
+
+      .intro-video.is-ready {
+        opacity: 1;
       }
 
       .intro-overlay {
@@ -375,7 +385,58 @@
           padding: 0.5rem 0.6rem;
         }
       }
+
+      /* ============ SITE FOOTER ============ */
+      .site-footer {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        padding: 2.2rem 6vw;
+        border-top: 1px solid rgba(245, 245, 245, 0.08);
+      }
+
+      .site-footer .footer-copy,
+      .site-footer .footer-location {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(245, 245, 245, 0.5);
+        margin: 0;
+      }
+
+      .site-footer .footer-enquire {
+        font-family: "Host Grotesk", sans-serif;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        color: #181717;
+        background: #d4b98c;
+        text-decoration: none;
+        padding: 0.75rem 2rem;
+        border-radius: 4rem;
+        transition: transform 0.3s ease, background 0.3s ease;
+        white-space: nowrap;
+      }
+
+      .site-footer .footer-enquire:hover {
+        transform: translateY(-2px);
+        background: #e8d5ae;
+      }
+
+      @media (max-width: 640px) {
+        .site-footer {
+          flex-direction: column;
+          text-align: center;
+          padding: 2rem 6vw;
+        }
+      }
     </style>
+    <link rel="preload" as="video" href="https://mirx28.github.io/mokshavilla-videos/interior.mp4" type="video/mp4" />
   </head>
   <body>
     <a href="index.html" class="site-logo" aria-label="Srivaas Realty logo">
@@ -394,10 +455,15 @@
       <video
         class="intro-video"
         src="https://mirx28.github.io/mokshavilla-videos/interior.mp4"
+        poster="posters/interior-poster.jpg"
+        preload="auto"
+        fetchpriority="high"
         autoplay
         muted
         loop
         playsinline
+        preload="auto"
+        onloadeddata="this.classList.add('is-ready')"
       ></video>
       <div class="intro-overlay"></div>
       <h1>Every room at Agar Villas is composed, not decorated.</h1>
@@ -720,6 +786,13 @@
       </div>
     </section>
 
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+      <p class="footer-copy">Copyright &copy; Srivaas Realty. All Rights Reserved.</p>
+      <a href="https://wa.me/917505091761?text=Hi%2C%20I%27m%20interested%20in%20Agar%20Villas%20%E2%80%94%20Rishikesh." target="_blank" rel="noopener noreferrer" class="footer-enquire">Enquire</a>
+      <p class="footer-location">2026, Rishikesh</p>
+    </footer>
+
     <!-- GSAP + plugins + Lenis via CDN -->
     <script src="https://unpkg.com/gsap@3.13.0/dist/gsap.min.js"></script>
     <script src="https://unpkg.com/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
@@ -810,11 +883,12 @@
         gsap.registerPlugin(SplitText, ScrollTrigger);
 
         const lenis = new Lenis({
-          duration: 1.05,
+          duration: 0.9,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
-          wheelMultiplier: 0.85,
-          touchMultiplier: 1.35,
-          lerp: 0.08,
+          wheelMultiplier: 1,
+          touchMultiplier: 1.5,
+          lerp: 0.11,
           syncTouch: true,
         });
         lenis.on("scroll", ScrollTrigger.update);
